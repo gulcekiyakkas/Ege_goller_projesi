@@ -1,116 +1,145 @@
-🌍 Ege Gölleri Zaman Serisi Analizi
-YOLOv8 Segmentasyon + NDWI / NDVI Tabanlı Uzaktan Algılama Projesi
+# Ege Gölleri Zaman Serisi Analizi  
+### YOLOv8 Segmentasyon ve NDVI/NDWI Tabanlı Uzaktan Algılama Projesi
 
-Bu proje, Ege Bölgesi’nde yer alan Burdur, Eber, Işıklı ve Salda göllerinin yıllar içerisindeki su alanı ve bitki örtüsü değişimlerini analiz etmek amacıyla geliştirilmiştir. Çalışmada hem klasik uzaktan algılama indeksleri (NDVI, NDWI) hem de derin öğrenme tabanlı YOLOv8 segmentasyon modeli birlikte kullanılmıştır. Proje, elde edilen sonuçların etkileşimli biçimde incelenebilmesi için Streamlit tabanlı bir web arayüzü ile sunulmaktadır.
+Bu projede, Ege Bölgesi’nde yer alan **Burdur, Eber, Işıklı ve Salda Gölleri**nin  
+**1990–2020** yılları arasındaki zamansal değişimi;
 
-🎯 Projenin Amacı
+- **YOLOv8 Segmentasyon modeli**
+- **NDVI / NDWI uzaktan algılama indeksleri**
+- **Zaman serisi ve trend analizi**
 
-Bu çalışmanın temel amacı, uydu görüntüleri üzerinden göllerin zamansal değişimini nicel olarak analiz etmek ve klasik indeks yöntemleri ile derin öğrenme temelli segmentasyon yaklaşımlarını karşılaştırmalı biçimde değerlendirmektir. Özellikle su alanı kayıplarının uzun vadede nasıl bir eğilim gösterdiği ortaya konulmakta ve geleceğe yönelik öngörüler üretilmektedir.
+kullanılarak incelenmiştir.
 
-🛰️ Kullanılan Veri Seti
+Proje, göl yüzey alanlarındaki değişimin **hem klasik indeks yöntemleri** hem de  
+**derin öğrenme tabanlı segmentasyon** ile karşılaştırmalı olarak analiz edilmesini amaçlamaktadır.
 
-Projede her göl için aşağıdaki yıllara ait uydu görüntüleri kullanılmıştır:
+---
 
-1990
+## 🔧 Kullanılan Teknolojiler
 
-2000
+- **Python**
+- **YOLOv8-Segmentation (Ultralytics)**
+- **OpenCV**
+- **NumPy / Pandas**
+- **Matplotlib**
+- **Streamlit**
+- **FPDF**
+- **Scikit-learn (Linear Regression)**
 
-2010
+---
 
-2020
+## 📊 Veri Seti
 
-Toplamda 4 göl × 4 yıl = 16 uydu görüntüsü analiz edilmiştir.
-YOLOv8 segmentasyon modeli için ayrıca 25 görüntüden oluşan özel bir segmentasyon veri seti oluşturulmuş ve model bu veri seti üzerinde eğitilmiştir.
+### Uydu Görüntüleri
+- 4 göl × 4 yıl (1990, 2000, 2010, 2020)
+- Toplam **16 adet** zaman serisi görüntüsü
+- Görüntüler RGB formatında kullanılmıştır
 
-🧠 Kullanılan Yöntemler ve Teknolojiler
-Uzaktan Algılama İndeksleri
+### YOLO Eğitim Verisi
+- Toplam **25 adet** göl görüntüsü
+- NDWI tabanlı otomatik maske üretimi ile segmentasyon etiketleri oluşturulmuştur
+- Manuel etiketleme yapılmadan **yarı-otomatik dataset** hazırlanmıştır
 
-NDVI (Normalized Difference Vegetation Index)
-Bitki örtüsü yoğunluğunu belirlemek için kullanılmıştır.
+---
 
-NDWI (Normalized Difference Water Index)
-Su alanlarının tespiti ve yüzdesel dağılımı için kullanılmıştır.
+## 🧠 Model Eğitimi (YOLOv8 Segmentasyon)
 
-Derin Öğrenme
+- **Model:** YOLOv8s-seg
+- **Epoch:** 50
+- **Image Size:** 512×512
+- **Eğitim Türü:** Su alanı segmentasyonu
+- **Donanım:** NVIDIA RTX 2050 (CUDA)
 
-YOLOv8 Segmentasyon (YOLOv8s-seg)
-Göl su alanlarının piksel bazlı olarak tespit edilmesi amacıyla eğitilmiştir.
+### Eğitim Performansı (Özet)
+- **Mask mAP50:** ≈ 0.99  
+- **Mask mAP50-95:** ≈ 0.85  
+- Model, su alanlarını yüksek doğrulukla segment edebilmektedir.
 
-Otomatik maske üretimi için NDWI tabanlı ön işlem uygulanmıştır.
+---
 
-Model 50 epoch boyunca eğitilmiş ve en iyi ağırlıklar best.pt dosyası olarak kaydedilmiştir.
+## 🌿 NDVI & NDWI Analizi
 
-Zaman Serisi ve Trend Analizi
+Projede klasik uzaktan algılama yaklaşımları da kullanılmıştır:
 
-Doğrusal regresyon kullanılarak:
+- **NDVI (Normalized Difference Vegetation Index)**  
+  → Bitki örtüsü yoğunluğunu analiz etmek için
 
-NDWI su trendi
+- **NDWI (Normalized Difference Water Index)**  
+  → Su yüzeylerini belirlemek için
 
-NDVI bitki trendi
+Sabit eşik değerleri kullanılarak:
+- Su alanı yüzdesi
+- Yeşil alan yüzdesi  
 
-YOLO tabanlı su alanı trendi
-hesaplanmıştır.
+yıllara göre hesaplanmıştır.
 
-2050 ve 2100 yılları için su alanı tahminleri üretilmiştir.
+---
 
-🖥️ Uygulama Arayüzü (Streamlit)
+## 📈 Zaman Serisi ve Trend Analizi
 
-Proje, Streamlit kullanılarak geliştirilen etkileşimli bir arayüz üzerinden sunulmaktadır. Arayüzde aşağıdaki özellikler yer almaktadır:
+- Her göl için:
+  - NDWI su yüzdesi
+  - NDVI yeşil alan yüzdesi
+  - YOLO segmentasyon su yüzdesi
 
-Göl seçimi
+yıllara göre karşılaştırılmıştır.
 
-Yıllara göre NDVI ve NDWI haritaları
+- **Linear Regression** kullanılarak:
+  - Su alanı trendi
+  - Bitki örtüsü trendi
 
-YOLO segmentasyon sonuçlarına dayalı su yüzdesi hesapları
+grafiksel olarak gösterilmiştir.
 
-Zaman serisi grafikleri ve trend çizgileri
+---
 
-Geleceğe yönelik su alanı tahminleri
+## 🖥️ Streamlit Arayüzü
 
-Otomatik PDF rapor oluşturma
+Proje, kullanıcı dostu bir **Streamlit arayüzü** ile sunulmaktadır.
 
-📊 Çıktılar
+Arayüzde:
+- Göl seçimi
+- Yıllara göre tablo
+- Zaman serisi grafikleri
+- NDVI / NDWI haritaları
+- YOLO segmentasyon sonuçları
+- Otomatik **PDF rapor üretimi**
 
-NDVI / NDWI harita görselleştirmeleri
+özellikleri bulunmaktadır.
 
-YOLO segmentasyon maskeleri
+---
 
-Su ve bitki değişim grafikleri
+## 📄 PDF Raporlama
 
-Yıllık trend değerleri (% / yıl)
+Streamlit üzerinden tek tıkla:
+- Tablo sonuçları
+- Sayısal analizler
 
-2050 ve 2100 projeksiyonları
+içeren **PDF rapor** üretilebilmektedir.  
+Türkçe karakter uyumluluğu için özel düzeltme uygulanmıştır.
 
-Akademik formatta PDF analiz raporu
+---
 
-📁 Proje Yapısı (Özet)
-YOLO_Training/
-│
-├── dataset/
-│   ├── images/
-│   ├── labels/
-│   └── masks/
-│
-├── runs/
-│   └── segment/
-│       └── seg_train/
-│           └── weights/
-│               └── best.pt
-│
-├── create_seg_dataset.py
-├── train_segment.py
-└── data.yaml
+## 🎯 Projenin Katkıları
 
+- Klasik NDWI yöntemi ile derin öğrenme tabanlı segmentasyonun karşılaştırılması
+- Göl su seviyelerinin zamansal değişiminin görsel ve sayısal analizi
+- Otomatik dataset üretimi ile etiketleme yükünün azaltılması
+- Akademik çalışmalara ve çevresel izleme projelerine altyapı oluşturması
 
-Streamlit uygulaması ana dizinde yer alan app.py dosyası üzerinden çalıştırılmaktadır.
+---
 
-⚙️ Kurulum ve Çalıştırma
+## 📌 Not
 
-Gerekli kütüphaneler:
+Bu proje:
+- **Akademik amaçlı**
+- **Çevresel izleme ve uzaktan algılama odaklı**
+- **Geliştirilmeye açık** bir çalışmadır.
 
-pip install ultralytics streamlit opencv-python numpy pandas matplotlib scikit-learn fpdf pillow
+Yeni yıllar, farklı göller veya çok bantlı uydu verileri eklenerek genişletilebilir.
 
+---
 
-Uygulamayı çalıştırmak için:
+## 👤 Geliştirici
 
-streamlit run app.py
+**Emirhan**  
+Makine / Uzaktan Algılama / Yapay Zeka Odaklı Proje Çalışması
