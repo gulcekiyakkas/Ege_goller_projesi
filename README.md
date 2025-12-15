@@ -141,5 +141,5 @@ Yeni yıllar, farklı göller veya çok bantlı uydu verileri eklenerek genişle
 
 ## 👤 Geliştirici
 
-**Emirhan**  
-Makine / Uzaktan Algılama / Yapay Zeka Odaklı Proje Çalışması
+**Gülce KIYAKKAŞ**  
+ Uzaktan Algılama / Yapay Zeka Odaklı Proje Çalışması
