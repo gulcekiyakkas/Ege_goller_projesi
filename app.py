@@ -13,7 +13,7 @@ from sklearn.linear_model import LinearRegression
 # ===============================
 # MODEL ve DATA AYARLARI
 # ===============================
-YOLO_MODEL_PATH = r"C:\Users\gulce\OneDrive\Masaüstü\YOLO_Training\runs\segment\seg_train\weights\best.pt"
+YOLO_MODEL_PATH = r"C:\Users\gulce\OneDrive\Masaüstü\YOLO_Training\runs\segment\seg_trainV\weights\best.pt"
 yolo_model = YOLO(YOLO_MODEL_PATH)
 
 # ===============================
