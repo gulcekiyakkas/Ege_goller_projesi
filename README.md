@@ -36,7 +36,7 @@ Proje, göl yüzey alanlarındaki değişimin **hem klasik indeks yöntemleri** 
 - Görüntüler RGB formatında kullanılmıştır
 
 ### YOLO Eğitim Verisi
-- Toplam **25 adet** göl görüntüsü
+- Toplam **136 adet** göl görüntüsü
 - NDWI tabanlı otomatik maske üretimi ile segmentasyon etiketleri oluşturulmuştur
 - Manuel etiketleme yapılmadan **yarı-otomatik dataset** hazırlanmıştır
 
@@ -45,7 +45,7 @@ Proje, göl yüzey alanlarındaki değişimin **hem klasik indeks yöntemleri** 
 ## 🧠 Model Eğitimi (YOLOv8 Segmentasyon)
 
 - **Model:** YOLOv8s-seg
-- **Epoch:** 50
+- **Epoch:** 80
 - **Image Size:** 512×512
 - **Eğitim Türü:** Su alanı segmentasyonu
 - **Donanım:** NVIDIA RTX 2050 (CUDA)
